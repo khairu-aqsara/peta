@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezadev\Admin\Latlong;
+namespace Ezadev\Admin\Peta;
 
 use Ezadev\Admin\Admin;
 use Ezadev\Admin\Extension as BaseExtension;
