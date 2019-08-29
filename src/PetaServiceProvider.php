@@ -21,7 +21,7 @@ class PetaServiceProvider extends ServiceProvider
         $this->loadViewsFrom($extension->views(), 'ezadev-peta');
 
         Admin::booting(function () {
-            Form::extend('peta', Latlong::class);
+            Form::extend('peta', Peta::class);
             Show\Field::macro('peta', Extension::showField());
         });
     }
