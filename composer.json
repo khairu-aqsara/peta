@@ -1,0 +1,33 @@
+{
+    "name": "ezadev/peta",
+    "description": "Peta Extensions",
+    "type": "library",
+    "keywords": ["ezadev-admin", "extension"],
+    "homepage": "https://github.com/khairu-aqsara/peta",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Khairu Aqsara",
+            "email": "khairu.aqsara@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "ezadev/admin": "^0.5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ezadev\\Admin\\Peta\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ezadev\\Admin\\Peta\\PetaServiceProvider"
+            ]
+        }
+    }
+}
