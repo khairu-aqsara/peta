@@ -10,6 +10,7 @@ abstract class AbstractMap
      * @var bool
      */
     protected $autoPosition = false;
+    protected $fieldAddress = false;
 
     /**
      * @var string
@@ -43,6 +44,18 @@ abstract class AbstractMap
     public function setAutoPosition($bool) {
         $this->autoPosition = $bool;
         return $this;
+    }
+
+    /**
+     * Set Auocomplete name to Address Field if any
+     * @param $string
+     * @return Place form Google Map Address
+     */
+
+    public function setFieldAddress($string)
+    {
+      $this->fieldAddress = $string;
+      return $this;
     }
 
     /**

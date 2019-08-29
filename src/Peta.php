@@ -11,6 +11,7 @@ class Peta extends Field
      * @var bool
      */
     protected $autoPosition = false;
+    protected $fieldAddress = false;
     /**
      * Column name.
      *
@@ -81,13 +82,27 @@ class Peta extends Field
     }
 
     /**
+     * Set Auocomplete name to Address Field if any
+     * @param $string
+     * @return Place form Google Map Address
+     */
+
+    public function setFieldAddress($string)
+    {
+      $this->fieldAddress = $string;
+      return $this;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
     public function render()
     {
-        $this->script = Extension::getProvider()->setAutoPosition($this->autoPosition)->applyScript($this->id);
+        $this->script = Extension::getProvider()
+              ->setFieldAddress($this->fieldAddress)
+              ->setAutoPosition($this->autoPosition)->applyScript($this->id);
 
         $variables = [
             'height'   => $this->height,

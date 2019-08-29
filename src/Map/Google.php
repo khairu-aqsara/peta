@@ -15,14 +15,34 @@ class Google extends AbstractMap
     public function applyScript(array $id)
     {
         $autoPosition = ($this->autoPosition)?'1':'0';
+        $fieldAddress = ($this->fieldAddress!="") ? $this->fieldAddress : "lokasi";
         return <<<EOT
         (function() {
             function init(name) {
                 var lat = $('#{$id['lat']}');
                 var lng = $('#{$id['lng']}');
-    
+                var place_name_address = '';
+                var geocoder;
+
                 var LatLng = new google.maps.LatLng(lat.val(), lng.val());
-    
+
+                geocoder = new google.maps.Geocoder();
+
+                var findAdrees = function(latling){
+                  geocoder.geocode( {'latLng' : latling}, function(results, status){
+                      if(status == google.maps.GeocoderStatus.OK) {
+                        console.log(results[0])
+                        if(results[0]){
+                            $("#{$fieldAddress}").val(results[0].formatted_address);
+                        }else{
+                          $("#{$fieldAddress}").val("No Results");
+                        }
+                      }else{
+                        $("#{$fieldAddress}").val(status);
+                      }
+                  })
+                }
+
                 var options = {
                     zoom: 18,
                     center: LatLng,
@@ -31,10 +51,10 @@ class Google extends AbstractMap
                     scaleControl: true,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
-    
+
                 var container = document.getElementById("map_"+name);
                 var map = new google.maps.Map(container, options);
-                
+
                 if (navigator.geolocation && {$autoPosition}) {
                   navigator.geolocation.getCurrentPosition(function(position) {
                     var pos = {
@@ -42,15 +62,15 @@ class Google extends AbstractMap
                       lng: position.coords.longitude
                     };
                     map.setCenter(pos);
-                    
+
                     lat.val(position.coords.latitude);
                     lng.val(position.coords.longitude);
-                    
+
                   }, function() {
-                    
+
                   });
                 }
-            
+
                 var marker = new google.maps.Marker({
                     position: LatLng,
                     map: map,
@@ -60,9 +80,11 @@ class Google extends AbstractMap
 
                 google.maps.event.addListener(marker, "position_changed", function(event) {
                   var position = marker.getPosition();
-                  
+
                    lat.val(position.lat());
                    lng.val(position.lng());
+
+                   findAdrees(position)
                 });
 
                 google.maps.event.addListener(map, 'click', function(event) {
@@ -77,7 +99,10 @@ class Google extends AbstractMap
                 google.maps.event.addListener(autocomplete, 'place_changed', function() {
                     var place = autocomplete.getPlace();
                     var location = place.geometry.location;
-                    
+
+                    place_name_address = place.name + ' ' + place.formatted_address;
+                    //$("#{$fieldAddress}").val(place_name_address);
+
                     if (place.geometry.viewport) {
                       map.fitBounds(place.geometry.viewport);
                     } else {
