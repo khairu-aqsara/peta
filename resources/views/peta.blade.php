@@ -14,8 +14,7 @@
                 <input id="{{$id['lat']}}" name="{{$name['lat']}}" class="form-control" value="{{ old($column['lat'], $value['lat']) }}" {!! $attributes !!} />
             </div>
 
-            @if($provider != 'yandex')
-            <div class="col-md-3 col-md-offset-3">
+            <div class="col-md-12" style="margin-top:25px;">
                 <div class="input-group">
                     <input type="text" class="form-control" id="search-{{$id['lat'].$id['lng']}}">
                     <span class="input-group-btn">
@@ -23,13 +22,12 @@
                     </span>
                 </div>
             </div>
-            @endif
 
         </div>
 
         <br>
 
-        <div id="map_{{$id['lat'].$id['lng']}}" style="width: 100%;height: {{ $height }}px"></div>
+        <div id="map_{{$id['lat'].$id['lng']}}" style="width: 100%;height: 350px"></div>
 
         @include('admin::form.help-block')
 

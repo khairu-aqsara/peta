@@ -33,12 +33,12 @@ class Google extends AbstractMap
                       if(status == google.maps.GeocoderStatus.OK) {
                         console.log(results[0])
                         if(results[0]){
-                            $("#{$fieldAddress}").val(results[0].formatted_address);
+                            $("textarea[name='{$fieldAddress}']").val(results[0].formatted_address);
                         }else{
-                          $("#{$fieldAddress}").val("No Results");
+                          $("textarea[name='{$fieldAddress}']").val("No Results");
                         }
                       }else{
-                        $("#{$fieldAddress}").val(status);
+                        $("textarea[name='{$fieldAddress}']").val(status);
                       }
                   })
                 }
@@ -101,7 +101,7 @@ class Google extends AbstractMap
                     var location = place.geometry.location;
 
                     place_name_address = place.name + ' ' + place.formatted_address;
-                    //$("#{$fieldAddress}").val(place_name_address);
+                    $("textarea[name='{$fieldAddress}']").val(place_name_address);
 
                     if (place.geometry.viewport) {
                       map.fitBounds(place.geometry.viewport);

@@ -104,11 +104,6 @@ class Peta extends Field
               ->setFieldAddress($this->fieldAddress)
               ->setAutoPosition($this->autoPosition)->applyScript($this->id);
 
-        $variables = [
-            'height'   => $this->height,
-            'provider' => Extension::config('default'),
-        ];
-
-        return parent::render()->with($variables);
+        return parent::render();
     }
 }
